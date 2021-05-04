@@ -1,67 +1,72 @@
 package com.example.loginapp1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Timer timer;
-
-    private ProgressBar mProgressBar;
-    private TextView mLoadingText;
-
-    private int mProgressStatus = 0;
-    private Handler mHandler = new Handler();
+    TextView privacyStatement;
+    Button bookMuse, viewMuse, orderingBtn, souvBtn, btn1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mLoadingText = (TextView) findViewById(R.id.loadCompleteTextView);
+        btn1 = findViewById(R.id.btn1);
 
-        new Thread(new Runnable() {
+        privacyStatement = findViewById(R.id.privacyStatement);
+        bookMuse = findViewById(R.id.bookMuse);
+        orderingBtn = findViewById(R.id.orderingBtn);
+        souvBtn = findViewById(R.id.souvBtn);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                while(mProgressStatus < 5000){
-                    mProgressStatus++;
-                    android.os.SystemClock.sleep(5000);
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mProgressBar.setProgress(mProgressStatus);
-                        }
-                    });
-                }
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLoadingText.setVisibility(View.VISIBLE);
-                    }
-                });
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, reycl.class);
+                startActivity(intent);
             }
-        }).start();
+        });
 
-    // Automatically check to new activity.
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-        @Override
-        public void run() {
-            Intent intent = new Intent(MainActivity.this, menuActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }, 5000);
+        privacyStatement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), webAppView.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
+        bookMuse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), viewingMuse.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        orderingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), foodOrder.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        souvBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), souvOrder.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
